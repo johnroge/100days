@@ -3,7 +3,7 @@
 use defaultdict for movie database
 """
 import csv
-from collections import defaultdict, namedtuple
+from collections import defaultdict, namedtuple, Counter
 
 vie_data = 'https://raw.githubusercontent/com/pybites/challenges/' \
            'solutions/13/movie_metadata.csv'
@@ -35,4 +35,11 @@ def get_movies_by_director(data=movies_csv):
 
     return directors
 
+
+# get a count of the top five
+cnt = Counter()
+for director, movies in directors.items():
+    cnt[director] += len(movies)
+
+cnt.most_common(5)
 
