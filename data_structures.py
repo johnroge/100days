@@ -21,3 +21,16 @@ l[0] = 'b'
 l.pop(0)
 print(l)
 
+# dict
+my_files = {}
+some_list = []
+list_of_files = sys_command??
+
+for f in list_of_files:
+    file_hash = md5hashFunction(f) # need to find this function
+    file_path = sys_command??(f)
+    if file_hash in my_files:
+        some_list.append(f.file_path)
+        some_list.append(my_files[file_hash][]) # need syntax here
+    else:
+        my_files[file_hash] = f.file_path

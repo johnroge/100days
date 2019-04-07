@@ -3,7 +3,6 @@
 deletes duplicates using a dictionary of hashes
 version 1.0
 last updated: 4/2019
-author: Andres Torres
 """
 import os
 import sys
@@ -13,18 +12,27 @@ import hashlib
 def main():
     """
     main script logic
-    :return: currently deletes all subsequent duplicate files found
+    :return: deletes all subsequent duplicate files found
     """
+    print('This will delete all duplicate files!')
+    print('-' * 60)
+    answer = input('If you still want to proceed, press Y. ')
+
+    if answer == 'Y':
+        pass
+    else:
+        SystemExit()
+
     if len(sys.argv) > 1:
         dups = {}
         folders = sys.argv[1:]
         for i in folders:
             if os.path.exists(i):
-                join_dict(dups, find_dup(i))
+                join_dict(dups, del_dup(i))
             else:
                 print('%s is not a valid path' % i)
                 sys.exit()
-        print_results(dups)
+        print('all duplicate files have been deleted')
     else:
         print('usage: python find_duplicates.py folder1 folder2 folder3')
 
@@ -46,7 +54,7 @@ def hash_file(path, blocksize=65536):
     return hasher.hexdigest()
 
 
-def find_dup(folder_to_search):
+def del_dup(folder_to_search):
     """
     scan folder and sub-folders for duplicate files
     :param folder_to_search: path to top level folder to search
@@ -60,7 +68,7 @@ def find_dup(folder_to_search):
             path = os.path.join(dir_name, filename)
             file_hash = hash_file(path)
             if file_hash in dups:
-                dups[file_hash].append(path)
+                os.remove(path)
             else:
                 dups[file_hash] = [path]
 
@@ -79,20 +87,6 @@ def join_dict(dict1, dict2):
             dict1[key] = dict1[key] + dict2[key]
         else:
             dict1[key] = dict2[key]
-
-
-def print_results(dict1):
-    results = list(filter(lambda x: len(x) > 1, dict1.values()))
-    if len(results) > 0:
-        print('Duplicates found: ')
-        print('following files are identical:')
-        print('-' * 60)
-        for result in results:
-            for subresult in result:
-                print('\t\t%s' % subresult)
-            print('-' * 60)
-    else:
-        print('No duplicates found.')
 
 
 if __name__ == '__main__':
