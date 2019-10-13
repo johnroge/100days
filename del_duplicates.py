@@ -7,22 +7,32 @@ last updated: 4/2019
 import os
 import sys
 import hashlib
+import time
 
 
 def main():
     """
-    main script logic
+    main script logic; get user input for folder structure to scan
     :return: deletes all subsequent duplicate files found
     """
-    print('This will delete all duplicate files!')
+
+    # present the user with fair warning and chance to opt out
+    print('This will delete all duplicate files found in the folder'
+          ' structure!')
     print('-' * 60)
-    answer = input('If you still want to proceed, press Y. ')
+    print('-' * 60)
+    time.sleep(6)
+    print('Are you SURE you want to delete all the duplicates?')
+    time.sleep(5)
+    answer = input('If you still want to proceed, press Y. Any other'
+                   ' key will exit the program:  ')
 
     if answer == 'Y':
         pass
     else:
-        SystemExit()
+        sys.exit()
 
+    # walk a given folder path and
     if len(sys.argv) > 1:
         dups = {}
         folders = sys.argv[1:]
@@ -56,7 +66,7 @@ def hash_file(path, blocksize=65536):
 
 def del_dup(folder_to_search):
     """
-    scan folder and sub-folders for duplicate files
+    scan folder and sub-folders and delete duplicate files
     :param folder_to_search: path to top level folder to search
     :return: a dictionary of file hashes and names
     """
